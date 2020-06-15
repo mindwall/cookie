@@ -39,6 +39,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
+  flutter_svg: ^0.18.0
 
 dev_dependencies:
   flutter_test:
@@ -49,9 +50,18 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  assets:
+    - assets/cook.png
+    - assets/chef.png
+    - assets/basket.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
+  fonts:
+    - family: BrushScript
+      fonts:
+        - asset: assets/brush_script_mt.ttf
+
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   # assets:

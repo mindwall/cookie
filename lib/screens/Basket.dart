@@ -12,7 +12,15 @@ class Basket extends StatelessWidget {
         child: MyAppBar(),
       ),
       body: Center(
-        child: Text('Shopping lists'),
+        child: Column(
+          children: [
+            Text('Shopping lists'),
+            ImageIcon(
+              AssetImage("assets/basket@2x.png"),
+              color: Color(0xFFffffff),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: AppBottomNav(),
     );

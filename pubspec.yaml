@@ -51,9 +51,9 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
-    - assets/cook.png
-    - assets/chef.png
-    - assets/basket.png
+    - assets/cook@2x.png
+    - assets/chef@2x.png
+    - assets/basket@2x.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

@@ -33,6 +33,8 @@ dependencies:
   # For example, to use Firebase Authentication and Cloud Firestore
   firebase_auth: ^0.14.0+5
   cloud_firestore: ^0.12.9+5
+  google_sign_in: ^4.5.1
+  apple_sign_in: ^0.1.0
 
   provider: ^4.1.3
   google_fonts: ^1.1.0
@@ -54,6 +56,8 @@ flutter:
     - assets/cook@2x.png
     - assets/chef@2x.png
     - assets/basket@2x.png
+    - assets/G_Logo.svg.png
+    - assets/cookie@2x.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

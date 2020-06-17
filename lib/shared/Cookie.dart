@@ -23,12 +23,28 @@ class MyAppBar extends StatelessWidget {
     return new Container(
       padding: new EdgeInsets.only(top: statusbarHeight),
       height: statusbarHeight + barHeight,
-      child: new Center(
-        child: Transform(
-            transform: Matrix4(1.0, -0.067156, 0.0, 0.0, -0.007156, 1.0, 0.0,
-                0.0, 0.0, 0.0, 10.0, 0.0, 0.0, -15.0, 0.0, 1.0),
-            child: new Text(title, style: Theme.of(context).textTheme.caption)),
+      child: CookieLogo(
+        title: title,
+        style: Theme.of(context).textTheme.caption,
       ),
+    );
+  }
+}
+
+class CookieLogo extends StatelessWidget {
+  const CookieLogo({Key key, @required this.title, this.style})
+      : super(key: key);
+
+  final String title;
+  final TextStyle style;
+
+  @override
+  Widget build(BuildContext context) {
+    return new Center(
+      child: Transform(
+          transform: Matrix4(1.0, -0.067156, 0.0, 0.0, -0.007156, 1.0, 0.0, 0.0,
+              0.0, 0.0, 10.0, 0.0, 0.0, -15.0, 0.0, 1.0),
+          child: new Text(title, style: style)),
     );
   }
 }

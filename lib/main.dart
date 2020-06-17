@@ -63,9 +63,7 @@ class MyApp extends StatelessWidget {
                   letterSpacing: 0.5,
                   color: Colors.white),
               subtitle1: TextStyle(
-                  fontSize: 102,
-                  fontFamily: 'BrushScript',
-                  color: Colors.white),
+                  fontSize: 95, fontFamily: 'BrushScript', color: Colors.white),
               bodyText2: TextStyle(
                   fontSize: 14.0,
                   fontFamily: 'Lato',

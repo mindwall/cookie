@@ -35,21 +35,21 @@ class LoginScreenState extends State<LoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(height: 30),
+            SizedBox(height: 90),
             CookieLogo(
               title: 'Cookie',
               style: Theme.of(context).textTheme.subtitle1,
             ),
             Image.asset(
               "assets/cookie@2x.png",
-              width: 150,
-              height: 150,
+              width: 130,
+              height: 130,
             ),
             SizedBox(height: 20),
             Text(
               'Login to open the cookie jar',
               style: GoogleFonts.marmelad(
-                  fontSize: 42,
+                  fontSize: 32,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 0.5,
                   color: Colors.white),
@@ -57,11 +57,11 @@ class LoginScreenState extends State<LoginScreen> {
             ),
             SizedBox(height: 30),
             LoginButton(
-              text: 'LOGIN WITH GOOGLE',
+              text: 'Sign in with Google',
               icon: Image.asset(
                 "assets/G_Logo.svg.png",
-                width: 30.0,
-                height: 30.0,
+                width: 24.0,
+                height: 24.0,
               ),
               color: Colors.white,
               loginMethod: auth.googleSignIn,
@@ -111,22 +111,25 @@ class LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 0),
-      child: FlatButton.icon(
-        padding: EdgeInsets.all(20),
-        icon: icon,
-        color: color,
-        onPressed: () async {
-          var user = await loginMethod();
-          if (user != null) {
-            Navigator.pushReplacementNamed(context, '/home');
-          }
-        },
-        label: Expanded(
-          child: Text('$text',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.black38)),
+    return ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(7)),
+      child: Container(
+        margin: EdgeInsets.only(bottom: 0, left: 0),
+        child: FlatButton.icon(
+          padding: EdgeInsets.only(left: 70, top: 20, bottom: 20, right: 55),
+          icon: icon,
+          color: color,
+          onPressed: () async {
+            var user = await loginMethod();
+            if (user != null) {
+              Navigator.pushReplacementNamed(context, '/home');
+            }
+          },
+          label: Expanded(
+            child: Text('$text',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.black45)),
+          ),
         ),
       ),
     );

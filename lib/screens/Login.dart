@@ -67,15 +67,34 @@ class LoginScreenState extends State<LoginScreen> {
               loginMethod: auth.googleSignIn,
             ),
             SizedBox(height: 20),
-            FlatButton(
-                child: Text('Continue as Guest',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                onPressed: auth.anonLogin),
+            LoginButtonGuest(
+              text: 'Continiue as Guest',
+              logAnon: auth.anonLogin,
+            ),
             SizedBox(height: 50),
           ],
         ),
       ),
     );
+  }
+}
+
+class LoginButtonGuest extends StatelessWidget {
+  final String text;
+  final Function logAnon;
+
+  const LoginButtonGuest({this.text, this.logAnon});
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+        child: Text(text, style: TextStyle(fontWeight: FontWeight.bold)),
+        onPressed: () async {
+          var user = await logAnon();
+          if (user != null) {
+            Navigator.pushReplacementNamed(context, '/home');
+          }
+        });
   }
 }
 
@@ -87,7 +106,7 @@ class LoginButton extends StatelessWidget {
   final Function loginMethod;
 
   const LoginButton(
-      {Key key, this.text, this.icon, this.color, this.loginMethod})
+      {Key key, this.text, this.loginMethod, this.icon, this.color})
       : super(key: key);
 
   @override

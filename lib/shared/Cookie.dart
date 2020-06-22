@@ -23,9 +23,14 @@ class MyAppBar extends StatelessWidget {
     return new Container(
       padding: new EdgeInsets.only(top: statusbarHeight),
       height: statusbarHeight + barHeight,
-      child: CookieLogo(
-        title: title,
-        style: Theme.of(context).textTheme.caption,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/');
+        },
+        child: CookieLogo(
+          title: title,
+          style: Theme.of(context).textTheme.caption,
+        ),
       ),
     );
   }

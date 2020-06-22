@@ -34,8 +34,6 @@ PODS:
   - firebase_core (0.0.1):
     - Firebase/Core
     - Flutter
-  - firebase_core_web (0.1.0):
-    - Flutter
   - FirebaseAnalytics (6.6.0):
     - FirebaseCore (~> 6.7)
     - FirebaseInstallations (~> 1.3)
@@ -74,8 +72,6 @@ PODS:
   - google_sign_in (0.0.1):
     - Flutter
     - GoogleSignIn (~> 5.0)
-  - google_sign_in_web (0.8.1):
-    - Flutter
   - GoogleAppMeasurement (6.6.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
@@ -124,10 +120,6 @@ PODS:
   - nanopb/encode (1.30905.0)
   - path_provider (0.0.1):
     - Flutter
-  - path_provider_linux (0.0.1):
-    - Flutter
-  - path_provider_macos (0.0.1):
-    - Flutter
   - PromisesObjC (1.2.9)
 
 DEPENDENCIES:
@@ -136,14 +128,10 @@ DEPENDENCIES:
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
-  - firebase_core_web (from `.symlinks/plugins/firebase_core_web/ios`)
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `6.26.0`)
   - Flutter (from `Flutter`)
   - google_sign_in (from `.symlinks/plugins/google_sign_in/ios`)
-  - google_sign_in_web (from `.symlinks/plugins/google_sign_in_web/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
-  - path_provider_linux (from `.symlinks/plugins/path_provider_linux/ios`)
-  - path_provider_macos (from `.symlinks/plugins/path_provider_macos/ios`)
 
 SPEC REPOS:
   trunk:
@@ -177,8 +165,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
-  firebase_core_web:
-    :path: ".symlinks/plugins/firebase_core_web/ios"
   FirebaseFirestore:
     :git: https://github.com/invertase/firestore-ios-sdk-frameworks.git
     :tag: 6.26.0
@@ -186,14 +172,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   google_sign_in:
     :path: ".symlinks/plugins/google_sign_in/ios"
-  google_sign_in_web:
-    :path: ".symlinks/plugins/google_sign_in_web/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
-  path_provider_linux:
-    :path: ".symlinks/plugins/path_provider_linux/ios"
-  path_provider_macos:
-    :path: ".symlinks/plugins/path_provider_macos/ios"
 
 CHECKOUT OPTIONS:
   FirebaseFirestore:
@@ -208,7 +188,6 @@ SPEC CHECKSUMS:
   firebase_analytics: 71531c94f4457504e12bb60baa53bf283f59e67f
   firebase_auth: d99b993c1405096e66c58211b1cd956c23eed1c5
   firebase_core: 335c02abd48672b7c83c683df833d0488a72e73e
-  firebase_core_web: d501d8b946b60c8af265428ce483b0fff5ad52d1
   FirebaseAnalytics: 96634d356482d4f3af8fe459a0ebf19a99c71b75
   FirebaseAuth: 7047aec89c0b17ecd924a550c853f0c27ac6015e
   FirebaseAuthInterop: a0f37ae05833af156e72028f648d313f7e7592e9
@@ -219,7 +198,6 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 6f5f680e65dc374397a483c32d1799ba822a395b
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   google_sign_in: 6bd214b9c154f881422f5fe27b66aaa7bbd580cc
-  google_sign_in_web: 52deb24929ac0992baff65c57956031c44ed44c3
   GoogleAppMeasurement: 67458367830514fb20fd9e233496f1eef9d90185
   GoogleDataTransport: 9a8a16f79feffc7f42096743de2a7c4815e84020
   GoogleDataTransportCCTSupport: d70a561f7d236af529fee598835caad5e25f6d3d
@@ -229,8 +207,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
-  path_provider_linux: 4d630dc393e1f20364f3e3b4a2ff41d9674a84e4
-  path_provider_macos: f760a3c5b04357c380e2fddb6f9db6f3015897e0
   PromisesObjC: b48e0338dbbac2207e611750777895f7a5811b75
 
 PODFILE CHECKSUM: 8046bfa0d41ca081d6d78134800b2bf56d5617d3

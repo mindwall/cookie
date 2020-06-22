@@ -58,6 +58,9 @@ flutter:
     - assets/basket@2x.png
     - assets/G_Logo.svg.png
     - assets/cookie@2x.png
+    - assets/Omelette.jpg
+    - assets/TomatoBasilPasta.jpg
+    - assets/SaltCrustedDorade.jpeg
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

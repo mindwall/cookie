@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
             switch (settings.name) {
               case '/':
                 return PageRouteBuilder(
-                    transitionDuration: Duration(milliseconds: 400),
+                    transitionDuration: Duration(milliseconds: 250),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       return FadeTransition(
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
                         LoginScreen());
               case '/recipes':
                 return PageRouteBuilder(
-                    transitionDuration: Duration(milliseconds: 400),
+                    transitionDuration: Duration(milliseconds: 250),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       return FadeTransition(
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
                         Recipes());
               case '/shopping':
                 return PageRouteBuilder(
-                    transitionDuration: Duration(milliseconds: 400),
+                    transitionDuration: Duration(milliseconds: 250),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       return FadeTransition(
@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
                         Basket());
               case '/cooking':
                 return PageRouteBuilder(
-                    transitionDuration: Duration(milliseconds: 400),
+                    transitionDuration: Duration(milliseconds: 250),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       return FadeTransition(
@@ -84,9 +84,33 @@ class MyApp extends StatelessWidget {
                       );
                     },
                     pageBuilder: (context, animation, secAnimation) => Cook());
+              case '/addrecipe':
+                return PageRouteBuilder(
+                    transitionDuration: Duration(milliseconds: 250),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      return FadeTransition(
+                        child: child,
+                        opacity: animation,
+                      );
+                    },
+                    pageBuilder: (context, animation, secAnimation) =>
+                        AddRecipe());
+              case '/profile':
+                return PageRouteBuilder(
+                    transitionDuration: Duration(milliseconds: 250),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      return FadeTransition(
+                        child: child,
+                        opacity: animation,
+                      );
+                    },
+                    pageBuilder: (context, animation, secAnimation) =>
+                        Profile());
               case '/home':
                 return PageRouteBuilder(
-                    transitionDuration: Duration(milliseconds: 400),
+                    transitionDuration: Duration(milliseconds: 250),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       return FadeTransition(
@@ -112,6 +136,7 @@ class MyApp extends StatelessWidget {
             primaryColor: Colors.amber[700],
             backgroundColor: Color(0xFF362E2E),
             accentColor: Colors.amber[700],
+            canvasColor: Colors.transparent,
 
             fontFamily: 'Lato',
             appBarTheme: AppBarTheme(),
@@ -155,7 +180,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Ingredient> ingredients = all_Ingredients;
+  List<Ingredient> ingredients = allIngredients;
   TextEditingController editingController = TextEditingController();
   var items = List<String>();
   var duplicatedItems = List<String>();
@@ -204,10 +229,28 @@ class _MyHomePageState extends State<MyHomePage> {
         child: MyAppBar(),
       ),
       body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/backdrop.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Column(
           children: <Widget>[
             pressed
-                ? Text('')
+                ? OutlineButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/profile');
+                    },
+                    /* fillColor: Colors.transparent, */
+
+                    padding: EdgeInsets.all(42.5),
+                    shape: CircleBorder(
+                        side: BorderSide(
+                            color: Colors.black,
+                            width: 2.0,
+                            style: BorderStyle.solid)),
+                  )
                 : Container(
                     height: 100,
                     child: Padding(

@@ -5,7 +5,7 @@ import 'package:cookie/services/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Recipes extends StatelessWidget {
-  final PageController ctrl = PageController();
+  final List<Recipe> recipes = cookBook;
 
   @override
   Widget build(BuildContext context) {
@@ -16,151 +16,119 @@ class Recipes extends StatelessWidget {
             MediaQuery.of(context).padding.top), // here the desired height
         child: MyAppBar(),
       ),
-      body: RecipeSlider(),
+      body: Wrap(
+        children: <Widget>[
+          Column(
+            children: [
+              ButtonsRow(),
+              SizedBox(height: 20),
+              RecipeFilterSearch(),
+              SizedBox(height: 20),
+              SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.all(8),
+                  itemCount: recipes.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 4 / 5,
+                      mainAxisSpacing: 16,
+                      crossAxisSpacing: 8),
+                  itemBuilder: (context, index) {
+                    return _buildRecipeCard(recipes[index]);
+                  },
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
       bottomNavigationBar: AppBottomNav(),
     );
   }
 }
 
-class RecipeSlider extends StatefulWidget {
-  @override
-  _RecipeSliderState createState() => _RecipeSliderState();
-}
-
-class _RecipeSliderState extends State<RecipeSlider> {
-  final PageController ctrl = PageController(viewportFraction: 0.85);
-  List<Recipe> recipes = cookBook;
-  int currentPage = 0;
-
-  @override
-  void initState() {
-    ctrl.addListener(() {
-      int next = ctrl.page.round();
-      if (currentPage != next) {
-        setState(() {
-          currentPage = next;
-        });
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned(
-          top: 25,
-          left: 123,
-          child: Center(
-            child: Text(
-              'Top Recipes',
-              style: GoogleFonts.josefinSlab(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w300,
-                  letterSpacing: 2.5,
-                  height: 0.1),
+_buildRecipeCard(Recipe recipe) {
+  return Hero(
+    tag: recipe.image,
+    child: Container(
+      width: 160,
+      height: 300,
+      padding: EdgeInsets.all(2),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        image: DecorationImage(
+            image: recipe.image,
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(Colors.black38, BlendMode.darken)),
+        boxShadow: [
+          BoxShadow(color: Colors.black45, blurRadius: 10, offset: Offset(5, 2))
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  recipe.title,
+                  style: GoogleFonts.libreBaskerville(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w400,
+                      letterSpacing: 2,
+                      color: Color(0xFFFFA143)),
+                  /* style: TextStyle(fontSize: 32.0, color: Color(0xFFFFA143)), */
+                ),
+                Text(
+                  recipe.cusine,
+                  style: GoogleFonts.josefinSlab(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w300,
+                    letterSpacing: 2.5,
+                  ),
+                ),
+              ],
             ),
           ),
-        ),
-        Positioned(
-          child: PageView.builder(
-            controller: ctrl,
-            itemCount: recipes.length,
-            itemBuilder: (context, index) {
-              bool active = index == currentPage;
-              return _buildRecipePage(recipes[index], active);
-            },
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-_buildRecipePage(Recipe recipe, bool active) {
-  final double blur = active ? 30 : 0;
-  final double offset = active ? 10 : 0;
-  final double top = active ? 60 : 180;
-
-  return AnimatedContainer(
-    duration: Duration(milliseconds: 700),
-    curve: Curves.easeOutQuint,
-    margin: EdgeInsets.only(top: top, bottom: 40, right: 30),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
-      image: DecorationImage(
-          image: recipe.image,
-          fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(Colors.black45, BlendMode.darken)),
-      boxShadow: [
-        BoxShadow(
-            color: Colors.black45,
-            blurRadius: blur,
-            offset: Offset(offset, offset))
-      ],
-    ),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                recipe.title,
-                style: GoogleFonts.libreBaskerville(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 2,
-                    color: Color(0xFFFFA143)),
-                /* style: TextStyle(fontSize: 32.0, color: Color(0xFFFFA143)), */
-              ),
-              Text(
-                recipe.cusine,
-                style: GoogleFonts.josefinSlab(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300,
-                  letterSpacing: 2.5,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-              child: Row(
-            children: [
-              SizedBox(width: 5),
-              Icon(
-                Icons.access_alarm,
-                color: Colors.green[300],
-                size: 14,
-              ),
-              Text(
-                recipe.time,
-                style: GoogleFonts.josefinSlab(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 2,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+                child: Row(
+              children: [
+                SizedBox(width: 5),
+                Icon(
+                  Icons.access_alarm,
                   color: Colors.green[300],
+                  size: 12,
                 ),
-              ),
-              SizedBox(width: 95),
-              Text(
-                'By ${recipe.cook}',
-                style: GoogleFonts.josefinSlab(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w300,
-                  letterSpacing: 2.5,
+                Text(
+                  recipe.time,
+                  style: GoogleFonts.josefinSlab(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 2,
+                    color: Colors.green[300],
+                  ),
                 ),
-              ),
-            ],
-          )),
-        ),
-      ],
+                /*    SizedBox(width: 95),
+                Text(
+                  'By ${recipe.cook}',
+                  style: GoogleFonts.josefinSlab(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w300,
+                    letterSpacing: 2.5,
+                  ),
+                ), */
+              ],
+            )),
+          ),
+        ],
+      ),
     ),
   );
 }

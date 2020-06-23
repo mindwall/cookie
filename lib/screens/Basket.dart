@@ -1,5 +1,6 @@
 import 'package:cookie/shared/shared.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Basket extends StatelessWidget {
   @override
@@ -14,10 +15,54 @@ class Basket extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Text('Shopping lists'),
-            ImageIcon(
-              AssetImage("assets/basket@2x.png"),
-              color: Color(0xFFffffff),
+            Text(
+              'Shop by Recipe',
+              style: GoogleFonts.josefinSlab(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w300,
+                  letterSpacing: 2.5,
+                  height: 0.1),
+            ),
+            SizedBox(height: 20),
+            ButtonsRow(),
+            SizedBox(height: 50),
+            Text(
+              'You might by out of',
+              style: GoogleFonts.josefinSlab(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w300,
+                  letterSpacing: 2.5,
+                  height: 0.1),
+            ),
+            SizedBox(height: 20),
+            ButtonsRow(),
+            SizedBox(height: 50),
+            Text(
+              'Create a New Shopping List',
+              style: GoogleFonts.josefinSlab(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w300,
+                  letterSpacing: 2.5,
+                  height: 0.1),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.only(right: 15.0),
+              child: OutlineButton(
+                onPressed: () {},
+                /* fillColor: Colors.transparent, */
+                child: Icon(
+                  Icons.add,
+                  size: 45.0,
+                  color: Colors.white12,
+                ),
+                padding: EdgeInsets.all(20.0),
+                shape: CircleBorder(
+                    side: BorderSide(
+                        color: Colors.black,
+                        width: 2.0,
+                        style: BorderStyle.solid)),
+              ),
             ),
           ],
         ),

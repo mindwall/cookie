@@ -17,7 +17,7 @@ List<Ingredient> testIngredients = [
   Fruit('Kiwi'),
 ];
 
-List<Ingredient> all_Ingredients = [
+List<Ingredient> allIngredients = [
   Vegetable('Green Asparagus'),
   Vegetable('Avocado'),
   Vegetable('Cherry Tomatoes'),

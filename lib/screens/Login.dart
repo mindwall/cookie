@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 /* import 'package:font_awesome_flutter/font_awesome_flutter.dart'; */
 import '../services/services.dart';
 import '../shared/shared.dart';
-import 'package:apple_sign_in/apple_sign_in.dart';
+/* import 'package:apple_sign_in/apple_sign_in.dart'; */
 
 class LoginScreen extends StatefulWidget {
   createState() => LoginScreenState();

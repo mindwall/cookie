@@ -48,6 +48,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Uploading a Photo of a meal for the recipe</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Taking a Photo of a meal for the recipe</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

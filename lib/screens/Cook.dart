@@ -101,6 +101,7 @@ _buildRecipePage(Recipe recipe, bool active) {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Title Widget
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
@@ -113,7 +114,6 @@ _buildRecipePage(Recipe recipe, bool active) {
                     fontWeight: FontWeight.w400,
                     letterSpacing: 2,
                     color: Color(0xFFFFA143)),
-                /* style: TextStyle(fontSize: 32.0, color: Color(0xFFFFA143)), */
               ),
               Text(
                 recipe.cusine,
@@ -126,6 +126,7 @@ _buildRecipePage(Recipe recipe, bool active) {
             ],
           ),
         ),
+        // Time and Cook
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Center(

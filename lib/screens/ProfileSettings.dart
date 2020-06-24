@@ -23,7 +23,7 @@ class _ProfileState extends State<Profile> {
               ],
             ),
           ),
-          ExhibitionBottomSheet(), //use this or ScrollableExhibitionSheet
+          CoolMenu(), //use this or ScrollableExhibitionSheet
         ],
       ),
     );

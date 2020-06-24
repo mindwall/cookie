@@ -1,19 +1,24 @@
 import 'dart:ui';
 import 'dart:math';
+
+import 'package:cookie/screens/screens.dart';
 import 'package:flutter/material.dart';
 
-const double minHeight = 120;
+const double minHeight = 95;
+const double iconStartSize = 34; //<-- add edge values
+const double iconEndSize = 32; //<-- add edge values
+const double iconStartMarginTop = 22; //<-- add edge values
+const double iconEndMarginTop = 100; //<-- add edge values //<-- add edge values
+const double iconsVerticalSpacing = 100; //<-- add edge values
+const double iconsHorizontalSpacing = 20; //<-- add edge values
 
-class ExhibitionBottomSheet extends StatefulWidget {
-  createState() => _ExhibitionBottomSheetState();
+class CoolMenu extends StatefulWidget {
+  createState() => _CoolMenuState();
 }
 
-class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
+class _CoolMenuState extends State<CoolMenu>
     with SingleTickerProviderStateMixin {
   AnimationController _controller; //<-- Create a controller
-
-  double get maxHeight =>
-      MediaQuery.of(context).size.height; //<-- Get max height of the screen
 
   @override
   void initState() {
@@ -30,6 +35,21 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
     _controller.dispose(); //<-- and remember to dispose it!
     super.dispose();
   }
+
+//<-- Get max height of the screen
+  double get maxHeight => MediaQuery.of(context).size.height;
+  double get itemBorderRadius => lerp(8, 24); //<-- increase item border radius
+
+  double get iconSize =>
+      lerp(iconStartSize, iconEndSize); //<-- increase icon size
+
+  double iconTopMargin(int index) => lerp(iconStartMarginTop,
+      iconEndMarginTop + index * (iconsVerticalSpacing + iconEndSize));
+  /* + headerTopMargin; */ //<-- calculate top margin based on header margin, and size of all of icons above (from small to big)
+
+  double iconLeftMargin(int index) => lerp(
+      index * 0.9 * (35 + iconStartSize * 1.5),
+      0); //<-- calculate left margin (from big to small)
 
   double lerp(double min, double max) =>
       lerpDouble(min, max, _controller.value);
@@ -59,51 +79,71 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
               child: Stack(
                 //<-- Add a stack
                 children: <Widget>[
-                  BottomNavigationBar(
-                    backgroundColor: Color(0xFFFF5800),
-                    elevation: 0,
-                    showSelectedLabels: false,
-                    showUnselectedLabels: false,
-                    iconSize: 36,
-                    items: [
-                      BottomNavigationBarItem(
-                          icon: ImageIcon(
-                            AssetImage("assets/cook@2x.png"),
-                            color: Color(0xFFffffff),
-                          ),
-                          title:
-                              Text('Cook', style: TextStyle(fontSize: 12.0))),
-                      BottomNavigationBarItem(
-                          icon: ImageIcon(
-                            AssetImage("assets/chef@2x.png"),
-                            color: Color(0xFFffffff),
-                          ),
-                          title: Text('Recipes',
-                              style: TextStyle(fontSize: 12.0))),
-                      BottomNavigationBarItem(
-                          icon: ImageIcon(
-                            AssetImage("assets/basket@2x.png"),
-                            color: Color(0xFFffffff),
-                          ),
-                          title:
-                              Text('Basket', style: TextStyle(fontSize: 12.0))),
-                    ].toList(),
-                    fixedColor: Color(0xFFffffff),
-                    onTap: (int idx) {
-                      switch (idx) {
-                        case 0:
-                          // do nuttin
+                  MenuIcon(),
+                  Container(
+                    child: Positioned(
+                      height: iconSize, //<-- Specify icon's size
+                      width: iconSize, //<-- Specify icon's size
+                      top: iconTopMargin(1), //<-- Specify icon's top margin
+                      left: iconLeftMargin(1),
+                      child: InkWell(
+                        onTap: () {
                           Navigator.pushNamed(context, '/cooking');
-                          break;
-                        case 1:
+                        },
+                        child: Image.asset(
+                          'assets/cook@2x.png',
+                          fit: BoxFit.cover,
+                          alignment: Alignment(lerp(1, 0), 0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: Positioned(
+                      height: iconSize, //<-- Specify icon's size
+                      width: iconSize, //<-- Specify icon's size
+                      top: iconTopMargin(2), //<-- Specify icon's top margin
+                      left: iconLeftMargin(2),
+                      child: InkWell(
+                        onTap: () {
                           Navigator.pushNamed(context, '/recipes');
-                          break;
-                        case 2:
+                        },
+                        child: Image.asset(
+                          'assets/chef@2x.png',
+                          fit: BoxFit.cover,
+                          alignment: Alignment(lerp(1, 0), 0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: Positioned(
+                      height: iconSize, //<-- Specify icon's size
+                      width: iconSize, //<-- Specify icon's size
+                      top: iconTopMargin(3), //<-- Specify icon's top margin
+                      left: iconLeftMargin(3),
+                      child: InkWell(
+                        onTap: () {
                           Navigator.pushNamed(context, '/shopping');
-                          break;
-                      }
-                    },
-                  ), //<-- With a menu button
+                        },
+                        child: Image.asset(
+                          'assets/basket@2x.png',
+                          fit: BoxFit.cover,
+                          alignment: Alignment(lerp(1, 0), 0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: ProfileView(
+                      topMargin:
+                          150, //<--provide margins and height same as for icon
+                      leftMargin: 70,
+                      height: 500,
+                      isVisible: _controller.status ==
+                          AnimationStatus.completed, //<--set visibility
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -141,5 +181,21 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
           velocity: _controller.value < 0.5
               ? -2.0
               : 2.0); //<-- or just continue to whichever edge is closer
+  }
+}
+
+class MenuIcon extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      //<-- Align the icon to bottom right corner
+      left: 0,
+      bottom: 35,
+      child: Icon(
+        Icons.menu,
+        color: Colors.white,
+        size: 28,
+      ),
+    );
   }
 }

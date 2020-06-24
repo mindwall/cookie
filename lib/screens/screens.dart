@@ -4,5 +4,6 @@ export 'Basket.dart';
 export 'AddRecipe.dart';
 export 'Login.dart';
 export 'ShoppingList.dart';
-export 'Recipe.dart';
+export 'SingleRecipe.dart';
 export 'ProfileSettings.dart';
+export 'profile.dart';

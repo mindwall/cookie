@@ -15,13 +15,11 @@ import 'dart:developer' as developer;
 
 void main() {
   runApp(MyApp());
-  developer.log('log me', name: 'my.app.category');
-  print('hello');
-  stderr.writeln('print me');
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -32,6 +30,7 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           title: 'Cookie',
+          navigatorKey: navigatorKey,
           navigatorObservers: [
             FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
           ],
@@ -223,6 +222,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF362E2E),
+
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0 +
             MediaQuery.of(context).padding.top), // here the desired height

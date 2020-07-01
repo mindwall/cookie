@@ -12,15 +12,16 @@ class Recipes extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF362E2E),
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0 +
-            MediaQuery.of(context).padding.top), // here the desired height
-        child: MyAppBar(),
-      ),
-      body: Wrap(
+      body: Stack(
         children: <Widget>[
+          PreferredSize(
+            preferredSize: Size.fromHeight(80.0 +
+                MediaQuery.of(context).padding.top), // here the desired height
+            child: MyAppBar(),
+          ),
           Column(
             children: [
+              SizedBox(height: 120),
               ButtonsRow(),
               SizedBox(height: 20),
               RecipeFilterSearch(),
@@ -41,22 +42,23 @@ class Recipes extends StatelessWidget {
               )
             ],
           ),
+          CoolMenu(),
         ],
       ),
-      bottomNavigationBar: AppBottomNav(),
     );
   }
 }
 
 class RecipeThumb extends StatelessWidget {
   final Recipe recipe;
+  // New dup method for Recipe Thumb and change above from list to single
   const RecipeThumb({Key key, this.recipe}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Hero(
       tag: recipe.image,
-      child: InkWell(
+      child: GestureDetector(
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute(
@@ -112,34 +114,26 @@ class RecipeThumb extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
-                    child: Row(
-                  children: [
-                    SizedBox(width: 5),
-                    Icon(
-                      Icons.access_alarm,
-                      color: Colors.green[300],
-                      size: 12,
-                    ),
-                    Text(
-                      recipe.time,
-                      style: GoogleFonts.josefinSlab(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 2,
+                  child: Row(
+                    children: [
+                      SizedBox(width: 5),
+                      Icon(
+                        Icons.access_alarm,
                         color: Colors.green[300],
+                        size: 12,
                       ),
-                    ),
-                    /*    SizedBox(width: 95),
-                  Text(
-                    'By ${recipe.cook}',
-                    style: GoogleFonts.josefinSlab(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w300,
-                      letterSpacing: 2.5,
-                    ),
-                  ), */
-                  ],
-                )),
+                      Text(
+                        recipe.time,
+                        style: GoogleFonts.josefinSlab(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 2,
+                          color: Colors.green[300],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),

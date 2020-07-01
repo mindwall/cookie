@@ -58,6 +58,7 @@ flutter:
     - assets/cook@2x.png
     - assets/backdrop.png
     - assets/chef@2x.png
+    - assets/menu@2x.png
     - assets/search@2x.png
     - assets/basket@2x.png
     - assets/G_Logo.svg.png

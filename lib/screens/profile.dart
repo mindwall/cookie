@@ -26,9 +26,17 @@ class ProfileView extends StatelessWidget {
       height: height,
       child: AnimatedOpacity(
         opacity: isVisible ? 1 : 0,
-        duration: Duration(milliseconds: 200),
+        duration: Duration(milliseconds: 100),
         child: Container(
-
+            decoration: BoxDecoration(
+              border: Border(
+                left: BorderSide(
+                  //                   <--- left side
+                  color: Colors.white70,
+                  width: 1.0,
+                ),
+              ),
+            ),
             /*  padding: EdgeInsets.only(left: height).add(EdgeInsets.all(8)), */
             child: _buildContent()),
       ),
@@ -52,7 +60,7 @@ class ProfileView extends StatelessWidget {
           radius: 50,
           backgroundImage: AssetImage('assets/me.jpg'),
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 20),
         Text(
           'Ivan Tonev',
           style: GoogleFonts.josefinSlab(
@@ -89,7 +97,8 @@ class ProfileView extends StatelessWidget {
             fontWeight: FontWeight.w700,
             letterSpacing: 2.5,
           ),
-        )
+        ),
+        SizedBox(height: 10),
       ],
     );
   }

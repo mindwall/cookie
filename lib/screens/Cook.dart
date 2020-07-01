@@ -1,3 +1,4 @@
+import 'package:cookie/screens/screens.dart';
 import 'package:cookie/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:cookie/localData/RecipeData.dart';
@@ -9,13 +10,18 @@ class Cook extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF362E2E),
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0 +
-            MediaQuery.of(context).padding.top), // here the desired height
-        child: MyAppBar(),
+      body: Stack(
+        children: <Widget>[
+          PreferredSize(
+            preferredSize: Size.fromHeight(80.0 +
+                MediaQuery.of(context).padding.top), // here the desired height
+            child: MyAppBar(),
+          ),
+          RecipeSlider(),
+          CoolMenu(), //use this or ScrollableExhibitionSheet
+        ],
       ),
-      body: RecipeSlider(),
-      bottomNavigationBar: AppBottomNav(),
+      /*  bottomNavigationBar: AppBottomNav(), */
     );
   }
 }
@@ -47,7 +53,7 @@ class _RecipeSliderState extends State<RecipeSlider> {
     return Stack(
       children: [
         Positioned(
-          top: 25,
+          top: 130,
           left: 123,
           child: Center(
             child: Text(
@@ -61,13 +67,15 @@ class _RecipeSliderState extends State<RecipeSlider> {
           ),
         ),
         Positioned(
-          child: PageView.builder(
+          child: PageView(
             controller: ctrl,
-            itemCount: recipes.length,
-            itemBuilder: (context, index) {
-              bool active = index == currentPage;
-              return _buildRecipePage(recipes[index], active);
-            },
+            children: recipes
+                .map((recipe) => RecipePreview(
+                    recipe: recipe,
+                    top: recipes.indexOf(recipe) == currentPage ? 170 : 260,
+                    blur: 30,
+                    offset: 10))
+                .toList(),
           ),
         ),
       ],
@@ -75,91 +83,116 @@ class _RecipeSliderState extends State<RecipeSlider> {
   }
 }
 
-_buildRecipePage(Recipe recipe, bool active) {
-  final double blur = active ? 30 : 0;
-  final double offset = active ? 10 : 0;
-  final double top = active ? 60 : 180;
+class RecipePreview extends StatelessWidget {
+  const RecipePreview(
+      {Key key,
+      @required this.top,
+      @required this.blur,
+      @required this.offset,
+      this.recipe})
+      : super(key: key);
 
-  return AnimatedContainer(
-    duration: Duration(milliseconds: 700),
-    curve: Curves.easeOutQuint,
-    margin: EdgeInsets.only(top: top, bottom: 35, right: 33),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
-      image: DecorationImage(
-          image: recipe.image,
-          fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(Colors.black38, BlendMode.darken)),
-      boxShadow: [
-        BoxShadow(
-            color: Colors.black45,
-            blurRadius: blur,
-            offset: Offset(offset, offset))
-      ],
-    ),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Title Widget
-        Padding(
-          padding: const EdgeInsets.all(10.0),
+  final double top;
+  final double blur;
+  final double offset;
+  final Recipe recipe;
+
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: recipe.image,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (BuildContext context) => SingleRecipe(recipe: recipe),
+            ),
+          );
+        },
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 700),
+          curve: Curves.easeOutQuint,
+          margin: EdgeInsets.only(top: top, bottom: 120, right: 33),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            image: DecorationImage(
+                image: recipe.image,
+                fit: BoxFit.cover,
+                colorFilter:
+                    ColorFilter.mode(Colors.black38, BlendMode.darken)),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black45,
+                  blurRadius: blur,
+                  offset: Offset(offset, offset))
+            ],
+          ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                recipe.title,
-                style: GoogleFonts.libreBaskerville(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 2,
-                    color: Color(0xFFFFA143)),
-              ),
-              Text(
-                recipe.cusine,
-                style: GoogleFonts.josefinSlab(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300,
-                  letterSpacing: 2.5,
+              // Title Widget
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      recipe.title,
+                      style: GoogleFonts.libreBaskerville(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 2,
+                          color: Color(0xFFFFA143)),
+                    ),
+                    Text(
+                      recipe.cusine,
+                      style: GoogleFonts.josefinSlab(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w300,
+                        letterSpacing: 2.5,
+                      ),
+                    ),
+                  ],
                 ),
+              ),
+              // Time and Cook
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                    child: Row(
+                  children: [
+                    SizedBox(width: 5),
+                    Icon(
+                      Icons.access_alarm,
+                      color: Colors.green[300],
+                      size: 14,
+                    ),
+                    Text(
+                      recipe.time,
+                      style: GoogleFonts.josefinSlab(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 2,
+                        color: Colors.green[300],
+                      ),
+                    ),
+                    Spacer(),
+                    Text(
+                      'By ${recipe.cook}',
+                      style: GoogleFonts.josefinSlab(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w300,
+                        letterSpacing: 2.5,
+                      ),
+                    ),
+                  ],
+                )),
               ),
             ],
           ),
         ),
-        // Time and Cook
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-              child: Row(
-            children: [
-              SizedBox(width: 5),
-              Icon(
-                Icons.access_alarm,
-                color: Colors.green[300],
-                size: 14,
-              ),
-              Text(
-                recipe.time,
-                style: GoogleFonts.josefinSlab(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 2,
-                  color: Colors.green[300],
-                ),
-              ),
-              SizedBox(width: 95),
-              Text(
-                'By ${recipe.cook}',
-                style: GoogleFonts.josefinSlab(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w300,
-                  letterSpacing: 2.5,
-                ),
-              ),
-            ],
-          )),
-        ),
-      ],
-    ),
-  );
+      ),
+    );
+  }
 }

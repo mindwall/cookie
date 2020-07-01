@@ -1,9 +1,14 @@
+import 'package:cookie/localData/IngridientsData.dart';
+import 'package:cookie/services/services.dart';
 import 'package:cookie/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+final TextEditingController editingController1 = TextEditingController();
+final TextEditingController editingController2 = TextEditingController();
+final TextEditingController editingController3 = TextEditingController();
+
 class AddRecipe extends StatelessWidget {
-  final TextEditingController editingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -36,11 +41,11 @@ class AddRecipe extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   InputField(
-                      editingController: editingController, label: 'Title'),
+                      editingController: editingController1, label: 'Title'),
                   InputField(
-                      editingController: editingController, label: 'Cusine'),
+                      editingController: editingController2, label: 'Cusine'),
                   InputField(
-                      editingController: editingController, label: 'Cook'),
+                      editingController: editingController3, label: 'Cook'),
                   SizedBox(height: 20),
                   Text('Add Ingredients',
                       style: GoogleFonts.josefinSlab(
@@ -68,7 +73,34 @@ class AddRecipe extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     color: Colors.amber,
-                  )
+                    child: Text('Save',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                        )),
+                  ),
+                  SizedBox(height: 20),
+                  MaterialButton(
+                    onPressed: () {
+                      return showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            // Retrieve the text the user has entered by using the
+                            // TextEditingController.
+                            content: Text(editingController1.text),
+                          );
+                        },
+                      );
+
+                      /* DatabaseService().addIngredients(gemuese, 'Gemüse', 'g'); */
+                    },
+                    color: Colors.amber,
+                    child: Text('test',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                        )),
+                  ),
+                  SizedBox(height: 20),
                 ],
               ),
             ),

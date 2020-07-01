@@ -7,8 +7,9 @@ class Recipe {
 
   String time;
   bool favorite;
-  List<Ingredient> ingridient;
+  List<Ingredient> ingredient;
   AssetImage image;
+  NetworkImage imageDB;
   List<Step> steps;
   String notes;
   String cook;
@@ -23,9 +24,33 @@ class Recipe {
       this.cook,
       this.cooked,
       this.image,
-      this.ingridient,
+      this.imageDB,
+      this.ingredient,
       this.notes,
       this.steps});
+
+  factory Recipe.fromMap(Map data) {
+    return Recipe(
+        title: data['name'] ?? '',
+        time: data['time'] ?? '',
+        cusine: data['cusine'] ?? '',
+        favorite: data['measurement'] ?? false,
+        cook: data['cook'] ?? '',
+        cooked: data['cooked'] ?? 0,
+        imageDB: NetworkImage(data['image']),
+        ingredient: (data['Ingredients'] ?? [])
+            .map((v) => Ingredient.fromMap(v))
+            .toList);
+  }
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'time': time,
+        'cusine': cusine,
+        'favorite': favorite,
+        'cook': cook,
+        'cooked': cooked,
+        'ingredient': ingredient.map((e) => e.toJson()).toList(),
+      };
 }
 
 class Step {
@@ -45,6 +70,21 @@ class Ingredient {
 
   Ingredient(
       {this.category, this.isEmpty = false, this.name, this.measurement});
+
+  factory Ingredient.fromMap(Map data) {
+    return Ingredient(
+      name: data['name'] ?? '',
+      category: data['category'] ?? '',
+      isEmpty: data['isEmpty'] ?? false,
+      measurement: data['measurement'] ?? '',
+    );
+  }
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'category': category,
+        'isEmpty': isEmpty,
+        'measurement': measurement
+      };
 }
 
 // Essentials, Vegetables, Fruits, Spcices & Herbs, Diary, Meat, Seafood, Nuts, Oils & Vinegars, Grains, Sweatners,

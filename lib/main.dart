@@ -179,7 +179,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Ingredient> ingredients = allIngredients;
+  /*  List<Ingredient> ingredients = allIngredients; */
+
   TextEditingController editingController = TextEditingController();
   var items = List<String>();
   var duplicatedItems = List<String>();
@@ -187,13 +188,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _showSearch() {
     setState(() {
-      pressed = false;
+      pressed == true ? pressed = false : pressed = false;
     });
   }
 
-  void filterSearchResults(String query) {
+  void filterSearchResults(String query) async {
     List<Ingredient> searchList = List<Ingredient>();
-    searchList.addAll(ingredients);
+    List<Ingredient> allIngredients =
+        await DatabaseService().getAllIngredients();
+
+    searchList.addAll(allIngredients);
     if (query.isNotEmpty) {
       List<String> listData = List<String>();
       searchList.forEach((item) {
@@ -222,96 +226,120 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF362E2E),
-
-      appBar: PreferredSize(
+      resizeToAvoidBottomPadding: false,
+      /* appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0 +
             MediaQuery.of(context).padding.top), // here the desired height
         child: MyAppBar(),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/backdrop.png"),
-            fit: BoxFit.cover,
+      ), */
+      body: Stack(
+        children: <Widget>[
+          PreferredSize(
+            preferredSize: Size.fromHeight(80.0 +
+                MediaQuery.of(context).padding.top), // here the desired height
+            child: MyAppBar(),
           ),
-        ),
-        child: Column(
-          children: <Widget>[
-            pressed
-                ? OutlineButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/profile');
-                    },
-                    /* fillColor: Colors.transparent, */
-
-                    padding: EdgeInsets.all(42.5),
-                    shape: CircleBorder(
-                        side: BorderSide(
-                            color: Colors.black,
-                            width: 2.0,
-                            style: BorderStyle.solid)),
-                  )
-                : Container(
-                    height: 100,
-                    child: Padding(
-                      padding: const EdgeInsets.all(7.0),
-                      child: TextField(
-                        style: TextStyle(
-                          fontSize: 24.0,
-                          fontFamily: 'Lato',
-                        ),
-                        onChanged: (value) {
-                          filterSearchResults(value);
-                        },
-                        controller: editingController,
-                        decoration: InputDecoration(
-                            labelText: "Search",
-                            hintText: "search",
-                            //hintStyle: Theme.of(context).textTheme.headline4)
-                            labelStyle: GoogleFonts.satisfy(
-                              fontSize: 24,
-                            ),
-                            hintStyle: GoogleFonts.satisfy(
-                                fontSize: 24, color: Colors.white10, height: 1),
-                            prefixIcon: Icon(Icons.search),
-                            border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20.0)))),
-                      ),
-                    ),
-                  ),
-            Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.all(3.0),
-                shrinkWrap: true,
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                      color: Color(0xFF4A3E3E),
-                      child: ListTile(
-                        title: Text(
-                          '${items[index]}',
-                          style: GoogleFonts.libreBaskerville(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w300,
-                              letterSpacing: 3,
-                              color: Color(0xFFFFA143)),
-                          /* style: TextStyle(fontSize: 32.0, color: Color(0xFFFFA143)), */
-                        ),
-                      ));
-                },
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/backdrop.png"),
+                fit: BoxFit.cover,
               ),
             ),
-          ],
-        ),
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 100,
+                ),
+                pressed
+                    ? OutlineButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/profile');
+                        },
+                        /* fillColor: Colors.transparent, */
+
+                        padding: EdgeInsets.all(42.5),
+                        shape: CircleBorder(
+                            side: BorderSide(
+                                color: Colors.black,
+                                width: 2.0,
+                                style: BorderStyle.solid)),
+                      )
+                    : PreferredSize(
+                        preferredSize: Size.fromHeight(
+                            220.0 + MediaQuery.of(context).padding.top),
+                        child: Container(
+                          height: 100,
+                          child: Padding(
+                            padding: const EdgeInsets.all(7.0),
+                            child: TextField(
+                              style: TextStyle(
+                                fontSize: 24.0,
+                                fontFamily: 'Lato',
+                              ),
+                              onChanged: (value) {
+                                filterSearchResults(value);
+                              },
+                              controller: editingController,
+                              decoration: InputDecoration(
+                                  labelText: "Search",
+                                  hintText: "search",
+                                  //hintStyle: Theme.of(context).textTheme.headline4)
+                                  labelStyle: GoogleFonts.satisfy(
+                                    fontSize: 24,
+                                  ),
+                                  hintStyle: GoogleFonts.satisfy(
+                                      fontSize: 24,
+                                      color: Colors.white10,
+                                      height: 1),
+                                  prefixIcon: Icon(Icons.search),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20.0)))),
+                            ),
+                          ),
+                        ),
+                      ),
+                Expanded(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(3.0),
+                    shrinkWrap: true,
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        color: Color(0xFF4A3E3E),
+                        child: ListTile(
+                          title: Text(
+                            '${items[index]}',
+                            style: GoogleFonts.libreBaskerville(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w300,
+                                letterSpacing: 3,
+                                color: Color(0xFFFFA143)),
+                            /* style: TextStyle(fontSize: 32.0, color: Color(0xFFFFA143)), */
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            right: 0,
+            top: 50,
+            child: FlatButton(
+              onPressed: _showSearch,
+              child: ImageIcon(
+                AssetImage("assets/search@2x.png"),
+                color: Colors.white24,
+              ),
+            ),
+          ),
+          CoolMenu(),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showSearch,
-        tooltip: 'search',
-        child: Icon(Icons.search),
-      ),
-      bottomNavigationBar:
-          AppBottomNav(), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

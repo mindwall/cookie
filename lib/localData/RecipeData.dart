@@ -47,3 +47,5 @@ void write() async {
   final Firestore _dB = Firestore.instance;
   _dB.collection('Recipes').add(tomatoBasilPasta.toJson());
 }
+
+// doc = _dB.collection('Ingredients').where('name' isEqual to tappedOn)

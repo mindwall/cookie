@@ -1,7 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Recipe {
-  int id;
+  String uid;
   String title;
   String cusine;
 
@@ -10,13 +11,13 @@ class Recipe {
   List<Ingredient> ingredient;
   AssetImage image;
   NetworkImage imageDB;
-  List<Step> steps;
+  List<Steps> steps;
   String notes;
   String cook;
   int cooked;
 
   Recipe(
-      {this.id,
+      {this.uid,
       this.title,
       this.cusine,
       this.time,
@@ -34,32 +35,46 @@ class Recipe {
         title: data['name'] ?? '',
         time: data['time'] ?? '',
         cusine: data['cusine'] ?? '',
-        favorite: data['measurement'] ?? false,
+        favorite: data['favorite'] ?? false,
         cook: data['cook'] ?? '',
         cooked: data['cooked'] ?? 0,
         imageDB: NetworkImage(data['image']),
+        steps: (data['steps'] ?? []).map((v) => Steps.fromMap(v)).toList(),
         ingredient: (data['Ingredients'] ?? [])
             .map((v) => Ingredient.fromMap(v))
-            .toList);
+            .toList());
   }
   Map<String, dynamic> toJson() => {
         'title': title,
         'time': time,
         'cusine': cusine,
+        'uid': uid,
         'favorite': favorite,
         'cook': cook,
         'cooked': cooked,
-        'ingredient': ingredient.map((e) => e.toJson()).toList(),
+        'ingredients': ingredient
+            .map((e) =>
+                Firestore.instance.collection('Ingredients').document(e.name))
+            .toList(),
+        'image': imageDB.url,
       };
 }
 
-class Step {
+class Steps {
   int orderId;
   String action;
   String time;
   Ingredient ingridient;
 
-  Step({this.orderId, this.action, this.ingridient, this.time});
+  Steps({this.orderId, this.action, this.ingridient, this.time});
+  factory Steps.fromMap(Map data) {
+    return Steps(
+      orderId: data['orderId'] ?? '',
+      action: data['action'] ?? '',
+      ingridient: data['Ingredient'] ?? '',
+      time: data['time'] ?? '',
+    );
+  }
 }
 
 class Ingredient {
@@ -67,13 +82,19 @@ class Ingredient {
   String category;
   bool isEmpty = false;
   String measurement;
+  String quantity;
 
   Ingredient(
-      {this.category, this.isEmpty = false, this.name, this.measurement});
+      {this.category,
+      this.isEmpty = false,
+      this.name,
+      this.measurement,
+      this.quantity});
 
   factory Ingredient.fromMap(Map data) {
     return Ingredient(
       name: data['name'] ?? '',
+      quantity: data['quantity'] ?? '',
       category: data['category'] ?? '',
       isEmpty: data['isEmpty'] ?? false,
       measurement: data['measurement'] ?? '',

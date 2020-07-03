@@ -18,10 +18,6 @@ class DatabaseService {
     var data = await DatabaseService().getRecipe('2y5K9oD5uSNbbhif2Hhy');
     return data;
   }
-/* 
-  void write() async {
-    _dB.collection('Recipes').add(omeletteDB.toJson());
-  } */
 
   getAllIngredients() async {
     List<Ingredient> ingredientsList = [];
@@ -40,13 +36,21 @@ class DatabaseService {
     String mes,
   ) {
     array.forEach((element) {
-      _dB.collection('Ingredients').add({
+      _dB.collection('Ingredients').document(element).setData({
         'name': element,
         'category': cat,
-        'isEmpty': false,
+        'isEmpty': true,
         'measurement': mes,
-      });
+        'quantity': '',
+      }, merge: true);
     });
+  }
+
+  void addRecipe(Recipe userRecipe) {
+    _dB
+        .collection('Recipes')
+        .document()
+        .setData(userRecipe.toJson(), merge: true);
   }
 
   void delete(String searchBy, String query) {
@@ -63,5 +67,9 @@ class DatabaseService {
     });
 
     /* batch.delete(allIngredients); */
+  }
+
+  tappedOn(String tappedOn) async {
+    return await _dB.collection('Ingredients').document(tappedOn).documentID;
   }
 }

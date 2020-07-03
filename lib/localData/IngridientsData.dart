@@ -17,7 +17,7 @@ List<Ingredient> testIngredients = [
   Fruit('Kiwi'),
 ];
 
-List<Ingredient> allIngredients = [
+/* List<Ingredient> allIngredients = [
   Vegetable('Green Asparagus'),
   Vegetable('Avocado'),
   Vegetable('Cherry Tomatoes'),
@@ -152,7 +152,7 @@ List<Ingredient> allIngredients = [
   Drink('Tonic'),
   Drink('Wine white'),
   Drink('Wine red'),
-];
+]; */
 
 List<Ingredient> omeletteIng = [
   Dairy('Eggs'),
@@ -181,6 +181,26 @@ List<Ingredient> pastaWithFreshTomatoesIng = [
 
 List<Ingredient> saltCrustedDoradeIng = [Seafood('Dorade'), Spice('Salt')];
 
+Ingredient dorade = Ingredient(
+    category: 'fisch',
+    isEmpty: false,
+    name: 'Dorade',
+    measurement: 'g',
+    quantity: '600g');
+Ingredient salt = Ingredient(
+    category: 'basic',
+    isEmpty: false,
+    name: 'Salz',
+    measurement: 'g',
+    quantity: '1kg');
+List<Ingredient> testIng = [dorade, salt];
+
+Steps one = Steps(orderId: 1, action: 'preheat oven');
+Steps two = Steps(orderId: 2, action: 'pour salt over fish');
+Steps three = Steps(orderId: 3, action: 'bake for 45 min');
+
+List<Steps> testSteps = [one, two, three];
+
 const gemuese = [
   'Blumenkohl',
   'Brokkoli',
@@ -202,7 +222,6 @@ const gemuese = [
   'Bärlauch',
   'Brennessel'
       'Mangold',
-  'Artischocke',
   'Kapern',
   'Zucchini',
   'Fenchel',
@@ -502,6 +521,8 @@ const milchprodukte = [
   'Butterschmalz',
   'Milchpulver',
   'Quark',
+];
+const kaese = [
   'Schafskäse',
   'Ziegenkäse',
   'Appenzeller',

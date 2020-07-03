@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
           navigatorObservers: [
             FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
           ],
+          // ignore: missing_return
           onGenerateRoute: (settings) {
             switch (settings.name) {
               case '/':
@@ -185,6 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var items = List<String>();
   var duplicatedItems = List<String>();
   bool pressed = true;
+  List<Ingredient> allIngredients;
 
   void _showSearch() {
     setState(() {
@@ -192,15 +194,19 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void filterSearchResults(String query) async {
-    List<Ingredient> searchList = List<Ingredient>();
-    List<Ingredient> allIngredients =
-        await DatabaseService().getAllIngredients();
+  void fetchAllIngredients() async {
+    allIngredients = await DatabaseService().getAllIngredients();
+  }
 
-    searchList.addAll(allIngredients);
+  void initState() {
+    super.initState();
+    fetchAllIngredients();
+  }
+
+  void filterSearchResults(String query) {
     if (query.isNotEmpty) {
       List<String> listData = List<String>();
-      searchList.forEach((item) {
+      allIngredients.forEach((item) {
         if (item.name.toLowerCase().contains(query.toLowerCase())) {
           listData.add(item.name);
         }
@@ -212,7 +218,7 @@ class _MyHomePageState extends State<MyHomePage> {
       return;
     } else {
       List<String> displayList = List<String>();
-      searchList.forEach((element) {
+      allIngredients.forEach((element) {
         displayList.add(element.name);
       });
       setState(() {

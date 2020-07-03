@@ -1,10 +1,14 @@
 import 'dart:io';
 
+import 'package:cookie/shared/shared.dart';
 import 'package:flutter/material.dart';
 
 import 'package:image_picker/image_picker.dart';
 
 class AddImage extends StatefulWidget {
+  final String title;
+  final String uid;
+  AddImage({this.title, this.uid});
   createState() => AddImageState();
 }
 
@@ -37,6 +41,7 @@ class AddImageState extends State<AddImage> {
             ),
           ],
         ),
+        Uploader(file: _image, title: widget.title, uid: widget.uid),
         _image != null
             ? Image.file(
                 _image,

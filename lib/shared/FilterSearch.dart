@@ -1,5 +1,6 @@
 import 'package:cookie/localData/IngridientsData.dart';
 import 'package:cookie/services/Models.dart';
+import 'package:cookie/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,7 +14,7 @@ class RecipeFilterSearch extends StatefulWidget {
 }
 
 class _RecipeFilterSearch extends State<RecipeFilterSearch> {
-  List<Ingredient> ingredients = allIngredients;
+  List<Ingredient> allIngredients;
   TextEditingController editingController = TextEditingController();
   var items = List<String>();
   var duplicatedItems = List<String>();
@@ -25,9 +26,13 @@ class _RecipeFilterSearch extends State<RecipeFilterSearch> {
     });
   }
 
+  void initState() {
+    super.initState();
+  }
+
   void filterSearchResults(String query) {
     List<Ingredient> searchList = List<Ingredient>();
-    searchList.addAll(ingredients);
+    searchList.addAll(allIngredients);
     if (query.isNotEmpty) {
       List<String> listData = List<String>();
       searchList.forEach((item) {

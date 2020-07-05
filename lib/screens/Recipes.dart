@@ -14,17 +14,18 @@ class Recipes extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       backgroundColor: Color(0xFF362E2E),
       body: Stack(
+        overflow: Overflow.visible,
         children: <Widget>[
           PreferredSize(
             preferredSize: Size.fromHeight(80.0 +
                 MediaQuery.of(context).padding.top), // here the desired height
             child: MyAppBar(),
           ),
-          Column(
+          ListView(
             children: [
-              SizedBox(height: 120),
+              SizedBox(height: 60),
               ButtonsRow(),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               RecipeFilterSearch(),
               SizedBox(height: 20),
               SingleChildScrollView(
@@ -98,7 +99,7 @@ class RecipeThumb extends StatelessWidget {
                       Text(
                         recipe.title,
                         style: GoogleFonts.libreBaskerville(
-                            fontSize: 24,
+                            fontSize: 22,
                             fontWeight: FontWeight.w400,
                             letterSpacing: 2,
                             color: Color(0xFFFFA143)),

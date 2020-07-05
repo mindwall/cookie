@@ -127,69 +127,73 @@ class RecipePreview extends StatelessWidget {
                   offset: Offset(offset, offset))
             ],
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Title Widget
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      recipe.title,
-                      style: GoogleFonts.libreBaskerville(
-                          fontSize: 30,
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 2,
-                          color: Color(0xFFFFA143)),
-                    ),
-                    Text(
-                      recipe.cusine,
-                      style: GoogleFonts.josefinSlab(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w300,
-                        letterSpacing: 2.5,
+          child: Material(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Title Widget
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Material(
+                        child: Text(
+                          recipe.title,
+                          style: GoogleFonts.libreBaskerville(
+                              fontSize: 30,
+                              fontWeight: FontWeight.w400,
+                              letterSpacing: 2,
+                              color: Color(0xFFFFA143)),
+                        ),
                       ),
-                    ),
-                  ],
+                      Text(
+                        recipe.cusine,
+                        style: GoogleFonts.josefinSlab(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w300,
+                          letterSpacing: 2.5,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              // Time and Cook
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                    child: Row(
-                  children: [
-                    SizedBox(width: 5),
-                    Icon(
-                      Icons.access_alarm,
-                      color: Colors.green[300],
-                      size: 14,
-                    ),
-                    Text(
-                      recipe.time,
-                      style: GoogleFonts.josefinSlab(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 2,
+                // Time and Cook
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                      child: Row(
+                    children: [
+                      SizedBox(width: 5),
+                      Icon(
+                        Icons.access_alarm,
                         color: Colors.green[300],
+                        size: 14,
                       ),
-                    ),
-                    Spacer(),
-                    Text(
-                      'By ${recipe.cook}',
-                      style: GoogleFonts.josefinSlab(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w300,
-                        letterSpacing: 2.5,
+                      Text(
+                        recipe.time,
+                        style: GoogleFonts.josefinSlab(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 2,
+                          color: Colors.green[300],
+                        ),
                       ),
-                    ),
-                  ],
-                )),
-              ),
-            ],
+                      Spacer(),
+                      Text(
+                        'By ${recipe.cook}',
+                        style: GoogleFonts.josefinSlab(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300,
+                          letterSpacing: 2.5,
+                        ),
+                      ),
+                    ],
+                  )),
+                ),
+              ],
+            ),
           ),
         ),
       ),

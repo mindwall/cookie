@@ -2,25 +2,7 @@ import 'package:cookie/screens/screens.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
-class Uploader extends StatefulWidget {
-  createState() => _UploaderState();
-}
-
-class _UploaderState extends State<Uploader> {
-  StorageUploadTask uploadTask;
-
-  void startUpload() async {
-    var imagePath = storage.ref().child(filePath);
-    var uploadTask = imagePath.putFile(image);
-    var taskCompleted = await uploadTask.onComplete;
-    imageUrl = await taskCompleted.ref.getDownloadURL();
-  }
-
-  void initState() {
-    super.initState();
-    startUpload();
-  }
-
+class Uploader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (uploadTask != null) {

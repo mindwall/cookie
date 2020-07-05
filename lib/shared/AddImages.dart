@@ -10,7 +10,8 @@ class AddImage extends StatefulWidget {
 
 class AddImageState extends State<AddImage> {
   Future getImage(ImageSource source) async {
-    final pickedFile = await picker.getImage(source: source);
+    final pickedFile =
+        await picker.getImage(source: source, maxHeight: 1000, maxWidth: 1000);
 
     setState(() {
       image = File(pickedFile.path);
@@ -25,7 +26,9 @@ class AddImageState extends State<AddImage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             MaterialButton(
-              onPressed: () => getImage(ImageSource.camera),
+              onPressed: () => getImage(
+                ImageSource.camera,
+              ),
               child: Icon(Icons.add_a_photo),
             ),
             MaterialButton(
@@ -34,7 +37,7 @@ class AddImageState extends State<AddImage> {
             ),
           ],
         ),
-        image != null && title != null ? Uploader() : SizedBox(height: 10),
+        image != null && ready ? Uploader() : SizedBox(height: 10),
         image != null
             ? Image.file(
                 image,

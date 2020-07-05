@@ -11,6 +11,7 @@ class Recipes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Color(0xFF362E2E),
       body: Stack(
         children: <Widget>[
@@ -28,16 +29,18 @@ class Recipes extends StatelessWidget {
               SizedBox(height: 20),
               SingleChildScrollView(
                 scrollDirection: Axis.vertical,
-                child: GridView.count(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.all(8),
-                  crossAxisCount: 2,
-                  childAspectRatio: 4 / 5,
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 8,
-                  children: recipes
-                      .map((recipe) => RecipeThumb(recipe: recipe))
-                      .toList(),
+                child: Material(
+                  child: GridView.count(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.all(8),
+                    crossAxisCount: 2,
+                    childAspectRatio: 4 / 5,
+                    mainAxisSpacing: 16,
+                    crossAxisSpacing: 8,
+                    children: recipes
+                        .map((recipe) => RecipeThumb(recipe: recipe))
+                        .toList(),
+                  ),
                 ),
               )
             ],

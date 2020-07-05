@@ -14,7 +14,7 @@ final FirebaseStorage storage =
     FirebaseStorage(storageBucket: 'gs://cook-ie.appspot.com');
 List<Ingredient> ingredients = testIng;
 List<Steps> steps = testSteps;
-String imageUrl = '';
+String imageUrl;
 String uid;
 File image;
 final picker = ImagePicker();
@@ -29,13 +29,17 @@ class AddRecipe extends StatefulWidget {
 
 class _AddRecipeState extends State<AddRecipe> {
   void startUpload() async {
-    var imagePath = storage.ref().child(filePath);
-    uploadTask = imagePath.putFile(image);
+    if (image != null) {
+      var imagePath = storage.ref().child(filePath);
+      uploadTask = imagePath.putFile(image);
+    }
   }
 
   Future<Recipe> createNewRecipe() async {
-    var taskCompleted = await uploadTask.onComplete;
-    imageUrl = await taskCompleted.ref.getDownloadURL();
+    var taskCompleted =
+        (uploadTask != null) ? await uploadTask.onComplete : null;
+    imageUrl =
+        (taskCompleted != null) ? taskCompleted.ref.getDownloadURL() : '';
     return Recipe(
       title: title.text,
       cusine: cusine.text,
@@ -47,7 +51,7 @@ class _AddRecipeState extends State<AddRecipe> {
       ingredient: ingredients,
       steps: steps,
       time: '',
-      imageDB: NetworkImage(imageUrl),
+      imageDB: NetworkImage(imageUrl ?? ''),
     );
   }
 

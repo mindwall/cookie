@@ -1,18 +1,23 @@
+import 'dart:io';
 import 'package:cookie/localData/IngridientsData.dart';
 import 'package:cookie/services/services.dart';
 import 'package:cookie/shared/shared.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 final TextEditingController title = TextEditingController();
 final TextEditingController cusine = TextEditingController();
 final TextEditingController cook = TextEditingController();
+final FirebaseStorage storage =
+    FirebaseStorage(storageBucket: 'gs://cook-ie.appspot.com');
 List<Ingredient> ingredients = testIng;
 List<Steps> steps = testSteps;
-String imageUrl =
-    'https://firebasestorage.googleapis.com/v0/b/cook-ie.appspot.com/o/Omelette.jpg?alt=media&token=b99d02c0-a1c6-4c5e-b558-fbf6930c7bba';
+String imageUrl;
 String uid;
+File image;
+final picker = ImagePicker();
 String filePath = 'images/${title.text}$uid.png';
 
 class AddRecipe extends StatefulWidget {
@@ -21,7 +26,6 @@ class AddRecipe extends StatefulWidget {
 }
 
 class _AddRecipeState extends State<AddRecipe> {
-  @override
   Recipe createNewRecipe() {
     return Recipe(
       title: title.text,
@@ -33,7 +37,7 @@ class _AddRecipeState extends State<AddRecipe> {
       notes: '',
       ingredient: ingredients,
       steps: steps,
-      imageDB: NetworkImage(imageUrl),
+      imageDB: NetworkImage(imageUrl ?? 'test'),
     );
   }
 
@@ -42,30 +46,9 @@ class _AddRecipeState extends State<AddRecipe> {
     fetchUser();
   }
 
-  fetchUser() async {
+  void fetchUser() async {
     uid = await AuthService().getUser.then((value) => value.uid);
   }
-
-  /* final FirebaseStorage _storage =
-      FirebaseStorage(storageBucket: 'gs://cook-ie.appspot.com');
-
-  StorageUploadTask _uploadTask;
-
-  /// Starts an upload task
-  void _startUpload() {
-    /// Unique file name for the file
-
-    setState(() {
-      _uploadTask = _storage.ref().child(filePath).putFile(widget.file);
-    });
-  }
-
-  Future<String> getImageUrl() async {
-    StorageTaskSnapshot snapshot =
-        await _storage.ref().child(filePath).putFile(widget.file).onComplete;
-    final String downloadUrl = await snapshot.ref.getDownloadURL();
-    return downloadUrl;
-  } */
 
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -121,7 +104,7 @@ class _AddRecipeState extends State<AddRecipe> {
                   //ToDo implement add step and modify ButtonsRow to accomodate
                   ButtonsRow(),
                   SizedBox(height: 10),
-                  AddImage(title: title.text, uid: uid),
+                  AddImage(),
                   MaterialButton(
                     onPressed: () {
                       Navigator.pop(context);
@@ -146,7 +129,6 @@ class _AddRecipeState extends State<AddRecipe> {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      //Uploader._startUpload;
                       createNewRecipe();
                       DatabaseService().addRecipe(createNewRecipe());
                     },

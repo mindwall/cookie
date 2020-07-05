@@ -170,6 +170,11 @@ class MyApp extends StatelessWidget {
   }
 }
 
+TextEditingController editingController = TextEditingController();
+var items = List<String>();
+bool pressed = true;
+List<Ingredient> allIngredients;
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -181,12 +186,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   /*  List<Ingredient> ingredients = allIngredients; */
-
-  TextEditingController editingController = TextEditingController();
-  var items = List<String>();
-  var duplicatedItems = List<String>();
-  bool pressed = true;
-  List<Ingredient> allIngredients;
 
   void _showSearch() {
     setState(() {

@@ -1,26 +1,19 @@
 import 'dart:io';
-
+import 'package:cookie/screens/AddRecipe.dart';
 import 'package:cookie/shared/shared.dart';
 import 'package:flutter/material.dart';
-
 import 'package:image_picker/image_picker.dart';
 
 class AddImage extends StatefulWidget {
-  final String title;
-  final String uid;
-  AddImage({this.title, this.uid});
   createState() => AddImageState();
 }
 
 class AddImageState extends State<AddImage> {
-  File _image;
-  final picker = ImagePicker();
-
   Future getImage(ImageSource source) async {
     final pickedFile = await picker.getImage(source: source);
 
     setState(() {
-      _image = File(pickedFile.path);
+      image = File(pickedFile.path);
     });
   }
 
@@ -41,10 +34,10 @@ class AddImageState extends State<AddImage> {
             ),
           ],
         ),
-        Uploader(file: _image, title: widget.title, uid: widget.uid),
-        _image != null
+        image != null && title != null ? Uploader() : SizedBox(height: 10),
+        image != null
             ? Image.file(
-                _image,
+                image,
                 width: 300,
               )
             : SizedBox(height: 10),

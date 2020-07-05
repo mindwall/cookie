@@ -1,48 +1,32 @@
-import 'dart:io';
-
-import 'package:cookie/services/services.dart';
+import 'package:cookie/screens/screens.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class Uploader extends StatefulWidget {
-  final File file;
-  final String title;
-  final String uid;
-
-  Uploader({this.file, this.title, this.uid});
   createState() => _UploaderState();
 }
 
 class _UploaderState extends State<Uploader> {
-  final FirebaseStorage _storage =
-      FirebaseStorage(storageBucket: 'gs://cook-ie.appspot.com');
+  StorageUploadTask uploadTask;
 
-  StorageUploadTask _uploadTask;
-
-  /// Starts an upload task
-  void _startUpload() {
-    /// Unique file name for the file
-    String filePath = 'images/${widget.title}${widget.uid}.png';
-
-    setState(() {
-      _uploadTask = _storage.ref().child(filePath).putFile(widget.file);
-    });
+  void startUpload() async {
+    var imagePath = storage.ref().child(filePath);
+    var uploadTask = imagePath.putFile(image);
+    var taskCompleted = await uploadTask.onComplete;
+    imageUrl = await taskCompleted.ref.getDownloadURL();
   }
 
-  Future<String> getImageUrl() async {
-    String filePath = 'images/${widget.title}${widget.uid}.png';
-    StorageTaskSnapshot snapshot =
-        await _storage.ref().child(filePath).putFile(widget.file).onComplete;
-    final String downloadUrl = await snapshot.ref.getDownloadURL();
-    return downloadUrl;
+  void initState() {
+    super.initState();
+    startUpload();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_uploadTask != null) {
+    if (uploadTask != null) {
       /// Manage the task state and event subscription with a StreamBuilder
       return StreamBuilder<StorageTaskEvent>(
-          stream: _uploadTask.events,
+          stream: uploadTask.events,
           builder: (_, snapshot) {
             var event = snapshot?.data?.snapshot;
 
@@ -52,27 +36,17 @@ class _UploaderState extends State<Uploader> {
 
             return Column(
               children: [
-                if (_uploadTask.isComplete)
-                  FutureBuilder<Object>(
-                      future: getImageUrl(),
-                      builder: (context, snapshot) {
-                        return Container(
-                            height: MediaQuery.of(context).size.height / 1.25,
-                            width: MediaQuery.of(context).size.width / 1.25,
-                            child: Image.network(snapshot.data.toString(),
-                                fit: BoxFit.scaleDown));
-                      }),
-
-                if (_uploadTask.isPaused)
+                if (uploadTask.isComplete) Text('ready'),
+                if (uploadTask.isPaused)
                   FlatButton(
                     child: Icon(Icons.play_arrow),
-                    onPressed: _uploadTask.resume,
+                    onPressed: uploadTask.resume,
                   ),
 
-                if (_uploadTask.isInProgress)
+                if (uploadTask.isInProgress)
                   FlatButton(
                     child: Icon(Icons.pause),
-                    onPressed: _uploadTask.pause,
+                    onPressed: uploadTask.pause,
                   ),
 
                 // Progress bar
@@ -83,10 +57,8 @@ class _UploaderState extends State<Uploader> {
           });
     } else {
       // Allows user to decide when to start the upload
-      return FlatButton.icon(
-        label: Text('Upload to Firebase'),
-        icon: Icon(Icons.cloud_upload),
-        onPressed: _startUpload,
+      return SizedBox(
+        height: 20,
       );
     }
   }

@@ -70,6 +70,12 @@ class DatabaseService {
   }
 
   tappedOn(String tappedOn) async {
-    return await _dB.collection('Ingredients').document(tappedOn).documentID;
+    List<Ingredient> ingredientsList = [];
+    var ing = await _dB.collection('Ingredients').document(tappedOn).get();
+    Ingredient a = Ingredient.fromMap(ing.data);
+    ingredientsList.add(a);
+    // add directly to Ing List in Add Recipe ???
+    // separate method to fetch local list of ing and then addAll in Recipe ??
+    return ingredientsList;
   }
 }

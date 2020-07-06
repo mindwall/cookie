@@ -227,6 +227,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  addTappedToList(String ingredient) {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -314,6 +315,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       return Card(
                         color: Color(0xFF4A3E3E),
                         child: ListTile(
+                          onTap: DatabaseService()
+                              .tappedOn(items[index].toString()),
                           title: Text(
                             '${items[index]}',
                             style: GoogleFonts.libreBaskerville(

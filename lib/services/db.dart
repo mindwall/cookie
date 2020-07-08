@@ -42,6 +42,7 @@ class DatabaseService {
         'isEmpty': true,
         'measurement': mes,
         'quantity': '',
+        'isSelected': false,
       }, merge: true);
     });
   }

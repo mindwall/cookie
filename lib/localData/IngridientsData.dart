@@ -399,9 +399,9 @@ const huelse = [
   'Straucherbse',
   'Urdbohne',
   'Borlottibohne',
-  'Kaiserschotten'
-      'Edamame'
-      'Arborio Reis',
+  'Kaiserschotten',
+  'Edamame',
+  'Arborio Reis',
   'Jasmine Reis',
   'Wild Reis',
   'Braun Reis',
@@ -510,8 +510,8 @@ const pilze = [
 const milchprodukte = [
   'Crème fraîche',
   'Butter',
-  'Milch'
-      'Buttermilch',
+  'Milch',
+  'Buttermilch',
   'Joghurt',
   'Kefir',
   'Saure Sahne',
@@ -587,4 +587,24 @@ const basics = [
   'Wein rot',
   'Chips',
   'Shokolade',
+];
+const pasta = [
+  'Spaghetti',
+  'Penne',
+  'Linguine',
+  'Lasagne',
+  'Fettucine',
+  'Tagliolini',
+  'Ravioli',
+  'Paccheri',
+  'Orzo',
+  'Fusilli',
+  'Farfalle',
+  'Gnocchi',
+  'Tagliatelle',
+  'Strozzapreti',
+  'Trodie',
+  'Spätzle',
+  'Makkaroni',
+  'Pappardelle',
 ];

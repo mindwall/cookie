@@ -52,6 +52,7 @@ class Recipe {
         'favorite': favorite,
         'cook': cook,
         'cooked': cooked,
+        'steps': steps.map((e) => e.action).toList(),
         'ingredients': ingredient
             .map((e) =>
                 Firestore.instance.collection('Ingredients').document(e.name))
@@ -83,13 +84,15 @@ class Ingredient {
   bool isEmpty = false;
   String measurement;
   String quantity;
+  bool isSelected = false;
 
   Ingredient(
       {this.category,
       this.isEmpty = false,
       this.name,
       this.measurement,
-      this.quantity});
+      this.quantity,
+      this.isSelected});
 
   factory Ingredient.fromMap(Map data) {
     return Ingredient(
@@ -97,6 +100,7 @@ class Ingredient {
       quantity: data['quantity'] ?? '',
       category: data['category'] ?? '',
       isEmpty: data['isEmpty'] ?? false,
+      isSelected: data['isSelected'] ?? false,
       measurement: data['measurement'] ?? '',
     );
   }
@@ -104,7 +108,8 @@ class Ingredient {
         'name': name,
         'category': category,
         'isEmpty': isEmpty,
-        'measurement': measurement
+        'measurement': measurement,
+        'isSelected': isSelected
       };
 }
 
